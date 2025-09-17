@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:csi_attendance/pages/login/widgets/rect_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class QRScanPage extends StatefulWidget {
@@ -12,16 +14,16 @@ class QRScanPage extends StatefulWidget {
 
 class _QRScanPage extends State<QRScanPage> {
   Barcode? result;
-  QRViewController? controller;
+  QRViewController? qrController;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller!.pauseCamera();
+      qrController!.pauseCamera();
     }
-    controller!.resumeCamera();
+    qrController!.resumeCamera();
   }
 
   @override
@@ -29,11 +31,31 @@ class _QRScanPage extends State<QRScanPage> {
     return Scaffold(
       backgroundColor: Color(0xFF222222),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 200, width: 200, child: _buildQrView(context)),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: _buildQrView(context),
+                    ),
+                  ],
+                ),
+              ),
+              RectButton(
+                text: 'Go back',
+                onTap: (text) {
+                  Get.back();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -61,11 +83,12 @@ class _QRScanPage extends State<QRScanPage> {
 
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
-      this.controller = controller;
+      this.qrController = controller;
     });
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        print(result);
       });
     });
   }
