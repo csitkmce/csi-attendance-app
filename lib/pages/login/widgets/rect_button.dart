@@ -16,7 +16,7 @@ class RectButton extends StatelessWidget {
         height: 50,
         width: double.infinity,
         decoration: BoxDecoration(color: Colors.black),
-        child: Center(child: Text('Login', style: Styles.textStyle)),
+        child: Center(child: Text(text, style: Styles.textStyle)),
       ),
     );
   }
