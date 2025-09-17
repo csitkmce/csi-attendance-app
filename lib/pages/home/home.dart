@@ -1,5 +1,6 @@
 import 'package:csi_attendance/controllers/main_controller.dart';
 import 'package:csi_attendance/pages/login/widgets/rect_button.dart';
+import 'package:csi_attendance/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,22 +17,33 @@ class HomePage extends StatelessWidget {
         backgroundColor: Color(0xFF222222),
         body: GetBuilder<MainController>(
           builder: (context) {
-            return Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      //
-                    ],
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text('Activity', style: Styles.titleStyle),
+                        SizedBox(height: 10),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                RectButton(
-                  text: 'Scan',
-                  onTap: (text) {
-                    controller.onScanTap();
-                  },
-                ),
-              ],
+                  RectButton(
+                    text: 'Scan',
+                    onTap: (text) {
+                      controller.onScanTap();
+                    },
+                  ),
+                ],
+              ),
             );
           },
         ),
