@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:csi_attendance/controllers/main_controller.dart';
 import 'package:csi_attendance/pages/login/widgets/rect_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class _QRScanPage extends State<QRScanPage> {
   Barcode? result;
   QRViewController? qrController;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  MainController mainController = Get.find<MainController>();
 
   @override
   void reassemble() {
@@ -40,7 +42,10 @@ class _QRScanPage extends State<QRScanPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       height: 200,
                       width: 200,
                       child: _buildQrView(context),
@@ -88,7 +93,9 @@ class _QRScanPage extends State<QRScanPage> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        print(result);
+        if (result!.code!.isNotEmpty) {
+          mainController.onQRdetect();
+        }
       });
     });
   }
