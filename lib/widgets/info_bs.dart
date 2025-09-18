@@ -72,9 +72,11 @@ class InfoBottomSheet extends StatelessWidget {
                     child: SlideAction(
                       text: 'Slide to mark attendance',
                       outerColor: Colors.green,
+                      animationDuration: const Duration(milliseconds: 100),
                       elevation: 0,
                       borderRadius: 10,
                       textStyle: Styles.textStyle,
+                      submittedIcon: Icon(Icons.person),
                       onSubmit: () async {
                         try {
                           // Call the backend to mark attendance
@@ -84,13 +86,20 @@ class InfoBottomSheet extends StatelessWidget {
                               );
 
                           if (response.success) {
-                            // Show success message
                             Get.snackbar(
                               "Attendance",
                               "Marked present successfully!",
                               snackPosition: SnackPosition.BOTTOM,
                               backgroundColor: Colors.green.shade600,
                               colorText: Colors.white,
+                            );
+
+                            Future.delayed(
+                              const Duration(milliseconds: 1000),
+                              () {
+                                Get.back();
+                                Get.back();
+                              },
                             );
                           } else {
                             // Handle failure
