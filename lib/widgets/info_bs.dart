@@ -64,53 +64,72 @@ class InfoBottomSheet extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            Padding(
-  padding: EdgeInsets.symmetric(vertical: 10),
-  child: SlideAction(
-    text: 'Slide to mark attendance',
-    outerColor: Colors.green,
-    elevation: 0,
-    borderRadius: 10,
-    textStyle: Styles.textStyle,
-    onSubmit: () async {
-      try {
-        // Call the backend to mark attendance
-        final response = await Get.find<MainController>()
-            .api
-            .markAttendance(AttendanceRequest(regId: user.id));
+            Builder(
+              builder: (context) {
+                if (!user.present) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: SlideAction(
+                      text: 'Slide to mark attendance',
+                      outerColor: Colors.green,
+                      elevation: 0,
+                      borderRadius: 10,
+                      textStyle: Styles.textStyle,
+                      onSubmit: () async {
+                        try {
+                          // Call the backend to mark attendance
+                          final response = await Get.find<MainController>().api
+                              .markAttendance(
+                                AttendanceRequest(regId: user.id),
+                              );
 
-        if (response.success) {
-          // Show success message
-          Get.snackbar(
-            "Attendance",
-            "Marked present successfully!",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green.shade600,
-            colorText: Colors.white,
-          );
-        } else {
-          // Handle failure
-          Get.snackbar(
-            "Attendance",
-            "Failed to mark attendance",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red.shade600,
-            colorText: Colors.white,
-          );
-        }
-      } catch (e) {
-        print("Error marking attendance: $e");
-        Get.snackbar(
-          "Attendance",
-          "Error marking attendance",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red.shade600,
-          colorText: Colors.white,
-        );
-      }
-    },
-  ),
-),
+                          if (response.success) {
+                            // Show success message
+                            Get.snackbar(
+                              "Attendance",
+                              "Marked present successfully!",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.green.shade600,
+                              colorText: Colors.white,
+                            );
+                          } else {
+                            // Handle failure
+                            Get.snackbar(
+                              "Attendance",
+                              "Failed to mark attendance",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red.shade600,
+                              colorText: Colors.white,
+                            );
+                          }
+                        } catch (e) {
+                          print("Error marking attendance: $e");
+                          Get.snackbar(
+                            "Attendance",
+                            "Error marking attendance",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.red.shade600,
+                            colorText: Colors.white,
+                          );
+                        }
+                      },
+                    ),
+                  );
+                } else {
+                  return Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF606060),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text('Marked as present', style: Styles.textStyle),
+                    ),
+                  );
+                }
+              },
+            ),
 
             SizedBox(height: 10),
 
