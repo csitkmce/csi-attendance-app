@@ -1,9 +1,12 @@
 import 'package:csi_attendance/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'package:csi_attendance/api/user_response.dart';
 
 class InfoBottomSheet extends StatelessWidget {
-  const InfoBottomSheet({super.key});
+  final UserResponse user;
+
+  const InfoBottomSheet({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,10 @@ class InfoBottomSheet extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Farhaan', style: Styles.titleStyle),
+            Text(user.name, style: Styles.titleStyle),
             SizedBox(height: 10),
+
+            // Team
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -30,18 +35,15 @@ class InfoBottomSheet extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'NOAH JOHN BYTE SIZED',
-                      style: Styles.textStyle.copyWith(color: Colors.blue),
-                    ),
-                  ],
+                child: Text(
+                  user.team ?? 'N/A',
+                  style: Styles.textStyle.copyWith(color: Colors.blue),
                 ),
               ),
             ),
             SizedBox(height: 10),
+
+            // Food preference
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -49,19 +51,17 @@ class InfoBottomSheet extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'VEG',
-                      style: Styles.textStyle.copyWith(
-                        color: 'VEG' == 'VEG' ? Colors.green : Colors.red,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  user.food ?? 'N/A',
+                  style: Styles.textStyle.copyWith(
+                    color: (user.food == 'VEG') ? Colors.green : Colors.red,
+                  ),
                 ),
               ),
             ),
+            SizedBox(height: 10),
+
+            // Slide to mark attendance
             Padding(
               padding: EdgeInsetsGeometry.symmetric(vertical: 10),
               child: SlideAction(
@@ -74,18 +74,21 @@ class InfoBottomSheet extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
+
             Text('Event Name', style: Styles.smallTextStyle),
-            Text('Hackade', style: Styles.textStyle),
+            Text(user.event ?? 'N/A', style: Styles.textStyle),
             SizedBox(height: 10),
+
             Text('Email', style: Styles.smallTextStyle),
-            Text('farhaan.nizam675@gmail.com', style: Styles.textStyle),
+            Text(user.email, style: Styles.textStyle),
             SizedBox(height: 10),
+
             Text('Phone number', style: Styles.smallTextStyle),
-            Text('8075221035', style: Styles.textStyle),
+            Text(user.phone, style: Styles.textStyle),
             SizedBox(height: 10),
+
             Text('Department', style: Styles.smallTextStyle),
-            Text('Computer Science and Engineering', style: Styles.textStyle),
-            SizedBox(height: 10),
+            Text(user.department, style: Styles.textStyle),
           ],
         ),
       ),

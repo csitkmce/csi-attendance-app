@@ -1,18 +1,24 @@
+import 'package:csi_attendance/api/api_service.dart';
 import 'package:csi_attendance/controllers/main_controller.dart';
 import 'package:csi_attendance/pages/login/widgets/form_input_field.dart';
 import 'package:csi_attendance/pages/login/widgets/rect_button.dart';
 import 'package:csi_attendance/utils/styles.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  MainController controller = Get.put(MainController());
+  // ✅ Create Dio + ApiService
+  final dio = Dio();
+  late final apiService = ApiService(dio);
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  // ✅ Inject MainController with ApiService
+  late final MainController controller = Get.put(MainController(apiService));
+
+  // ✅ Proper controllers (don’t create new inside FormFieldInput)
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

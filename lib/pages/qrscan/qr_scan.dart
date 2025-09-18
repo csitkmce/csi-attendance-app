@@ -94,7 +94,7 @@ class _QRScanPage extends State<QRScanPage> {
       setState(() {
         result = scanData;
         if (result!.code!.isNotEmpty) {
-          mainController.onQRdetect();
+          mainController.onQRdetect(result!.code!);
         }
       });
     });
