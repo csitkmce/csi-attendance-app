@@ -1,5 +1,9 @@
+import 'package:csi_attendance/api/attendance_request.dart';
+import 'package:csi_attendance/controllers/main_controller.dart';
 import 'package:csi_attendance/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:csi_attendance/api/user_response.dart';
 
@@ -60,19 +64,54 @@ class InfoBottomSheet extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-
-            // Slide to mark attendance
             Padding(
-              padding: EdgeInsetsGeometry.symmetric(vertical: 10),
-              child: SlideAction(
-                text: 'Slide to mark attendance',
-                outerColor: Colors.green,
-                onSubmit: () {},
-                elevation: 0,
-                borderRadius: 10,
-                textStyle: Styles.textStyle,
-              ),
-            ),
+  padding: EdgeInsets.symmetric(vertical: 10),
+  child: SlideAction(
+    text: 'Slide to mark attendance',
+    outerColor: Colors.green,
+    elevation: 0,
+    borderRadius: 10,
+    textStyle: Styles.textStyle,
+    onSubmit: () async {
+      try {
+        // Call the backend to mark attendance
+        final response = await Get.find<MainController>()
+            .api
+            .markAttendance(AttendanceRequest(regId: user.id));
+
+        if (response.success) {
+          // Show success message
+          Get.snackbar(
+            "Attendance",
+            "Marked present successfully!",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green.shade600,
+            colorText: Colors.white,
+          );
+        } else {
+          // Handle failure
+          Get.snackbar(
+            "Attendance",
+            "Failed to mark attendance",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red.shade600,
+            colorText: Colors.white,
+          );
+        }
+      } catch (e) {
+        print("Error marking attendance: $e");
+        Get.snackbar(
+          "Attendance",
+          "Error marking attendance",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.shade600,
+          colorText: Colors.white,
+        );
+      }
+    },
+  ),
+),
+
             SizedBox(height: 10),
 
             Text('Event Name', style: Styles.smallTextStyle),

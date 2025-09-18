@@ -31,3 +31,10 @@ class UserResponse {
 
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 }
+
+class AttendanceResponse {
+  final bool success;
+  AttendanceResponse({required this.success});
+  factory AttendanceResponse.fromJson(Map<String, dynamic> json) =>
+      AttendanceResponse(success: json['success']);
+}
