@@ -20,22 +20,23 @@ class HomePage extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text('Activity', style: Styles.titleStyle),
-                        SizedBox(height: 10),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: Column(
+                  //     children: [
+                  //       Text('Activity', style: Styles.titleStyle),
+                  //       SizedBox(height: 10),
+                  //       Container(
+                  //         padding: EdgeInsets.all(10),
+                  //         decoration: BoxDecoration(
+                  //           border: Border.all(color: Colors.black),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   RectButton(
                     text: 'Scan',
                     onTap: (text) {
